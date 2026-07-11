@@ -1,32 +1,16 @@
 import { Router } from 'express';
+import { ExamController } from '../modules/exams/exam.controller';
 import { authenticate, authorize } from '../middleware/auth';
 
 const router = Router();
 router.use(authenticate);
 
-router.get('/', async (req, res) => {
-  res.json({ status: 'success', message: 'Get all exams - TODO' });
-});
-
-router.post('/', authorize('SUPER_ADMIN', 'PRINCIPAL', 'TEACHER'), async (req, res) => {
-  res.json({ status: 'success', message: 'Create exam - TODO' });
-});
-
-router.get('/:id', async (req, res) => {
-  res.json({ status: 'success', message: 'Get exam by ID - TODO' });
-});
-
-router.put('/:id', authorize('SUPER_ADMIN', 'PRINCIPAL', 'TEACHER'), async (req, res) => {
-  res.json({ status: 'success', message: 'Update exam - TODO' });
-});
-
-// Results
-router.get('/:id/results', async (req, res) => {
-  res.json({ status: 'success', message: 'Get exam results - TODO' });
-});
-
-router.post('/:id/results', authorize('SUPER_ADMIN', 'PRINCIPAL', 'TEACHER'), async (req, res) => {
-  res.json({ status: 'success', message: 'Add exam results - TODO' });
-});
+router.get('/', ExamController.getAll);
+router.get('/:id', ExamController.getById);
+router.post('/', authorize('SUPER_ADMIN', 'PRINCIPAL', 'TEACHER'), ExamController.create);
+router.post('/results', authorize('SUPER_ADMIN', 'PRINCIPAL', 'TEACHER'), ExamController.addResult);
+router.post('/results/bulk', authorize('SUPER_ADMIN', 'PRINCIPAL', 'TEACHER'), ExamController.bulkAddResults);
+router.get('/:examId/results', ExamController.getResults);
+router.get('/report-card/:studentId', ExamController.getReportCard);
 
 export default router;

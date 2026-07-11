@@ -1,23 +1,14 @@
 import { Router } from 'express';
+import { AttendanceController } from '../modules/attendance/attendance.controller';
 import { authenticate, authorize } from '../middleware/auth';
 
 const router = Router();
 router.use(authenticate);
 
-router.post('/mark', authorize('SUPER_ADMIN', 'PRINCIPAL', 'TEACHER', 'STAFF'), async (req, res) => {
-  res.json({ status: 'success', message: 'Mark attendance - TODO' });
-});
-
-router.get('/class/:classId', async (req, res) => {
-  res.json({ status: 'success', message: 'Get class attendance - TODO' });
-});
-
-router.get('/student/:studentId', async (req, res) => {
-  res.json({ status: 'success', message: 'Get student attendance - TODO' });
-});
-
-router.put('/:id', authorize('SUPER_ADMIN', 'PRINCIPAL', 'TEACHER'), async (req, res) => {
-  res.json({ status: 'success', message: 'Update attendance - TODO' });
-});
+router.post('/mark', authorize('SUPER_ADMIN', 'PRINCIPAL', 'TEACHER', 'STAFF'), AttendanceController.mark);
+router.post('/bulk-mark', authorize('SUPER_ADMIN', 'PRINCIPAL', 'TEACHER', 'STAFF'), AttendanceController.bulkMark);
+router.get('/section/:sectionId', AttendanceController.getBySection);
+router.get('/student/:studentId', AttendanceController.getByStudent);
+router.get('/stats', AttendanceController.getStats);
 
 export default router;

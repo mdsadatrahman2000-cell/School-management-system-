@@ -18,16 +18,19 @@ import {
   X,
   Bell,
   Search,
-  ChevronDown
+  ChevronDown,
+  UserCog,
+  FileText
 } from 'lucide-react'
 
 const navigation = [
   { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
+  { name: 'Users', href: '/dashboard/users', icon: UserCog },
   { name: 'Students', href: '/dashboard/students', icon: GraduationCap },
   { name: 'Teachers', href: '/dashboard/teachers', icon: Users },
   { name: 'Classes', href: '/dashboard/classes', icon: BookOpen },
   { name: 'Attendance', href: '/dashboard/attendance', icon: ClipboardList },
-  { name: 'Exams', href: '/dashboard/exams', icon: BookOpen },
+  { name: 'Exams', href: '/dashboard/exams', icon: FileText },
   { name: 'Fees', href: '/dashboard/fees', icon: DollarSign },
   { name: 'Timetable', href: '/dashboard/timetable', icon: Calendar },
   { name: 'Messages', href: '/dashboard/messages', icon: MessageSquare },
