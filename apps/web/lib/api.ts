@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api/v1'
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || '/api'
 
 export const api = axios.create({
   baseURL: API_BASE_URL,
@@ -9,10 +9,8 @@ export const api = axios.create({
   },
 })
 
-// Request interceptor
 api.interceptors.request.use(
   (config) => {
-    // Add auth token if available
     if (typeof window !== 'undefined') {
       const token = localStorage.getItem('accessToken')
       if (token) {
@@ -21,23 +19,18 @@ api.interceptors.request.use(
     }
     return config
   },
-  (error) => {
-    return Promise.reject(error)
-  }
+  (error) => Promise.reject(error)
 )
 
-// Response interceptor
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config
 
-    // If 401 and not already retrying
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true
 
       try {
-        // Try to refresh token
         const refreshToken = localStorage.getItem('refreshToken')
         if (refreshToken) {
           const response = await axios.post(`${API_BASE_URL}/auth/refresh`, {
@@ -52,7 +45,6 @@ api.interceptors.response.use(
           return api(originalRequest)
         }
       } catch (refreshError) {
-        // Refresh failed, redirect to login
         localStorage.removeItem('accessToken')
         localStorage.removeItem('refreshToken')
         window.location.href = '/login'

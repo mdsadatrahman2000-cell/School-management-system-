@@ -1,0 +1,6 @@
+{
+  "version": 2,
+  "buildCommand": "cd ../.. && pnpm install --filter web && cd apps/web && npx prisma generate && next build",
+  "outputDirectory": ".next",
+  "installCommand": "cd ../.. && pnpm install --filter web"
+}

@@ -2,14 +2,21 @@
   "name": "web",
   "version": "1.0.0",
   "private": true,
+  "prisma": {
+    "seed": "node prisma/seed.js"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "db:push": "npx prisma db push",
+    "db:seed": "npx prisma db seed",
+    "db:reset": "npx prisma db push --force-reset && npx prisma db seed"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.4.0",
+    "@prisma/client": "^5.8.0",
     "@radix-ui/react-avatar": "^1.0.4",
     "@radix-ui/react-dialog": "^1.0.5",
     "@radix-ui/react-dropdown-menu": "^2.0.6",
@@ -19,8 +26,10 @@
     "@radix-ui/react-tabs": "^1.0.4",
     "@tanstack/react-query": "^5.17.19",
     "axios": "^1.6.5",
+    "bcryptjs": "^2.4.3",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
+    "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.303.0",
     "next": "14.1.0",
     "react": "^18",
@@ -32,6 +41,8 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/jsonwebtoken": "^9.0.5",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
@@ -39,6 +50,7 @@
     "eslint": "^8",
     "eslint-config-next": "14.1.0",
     "postcss": "^8",
+    "prisma": "^5.8.0",
     "tailwindcss": "^3.3.0",
     "typescript": "^5"
   }
